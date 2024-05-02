@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<div id="content-box">
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>NAME</th>
+            <th>TOKEN</th>
+        </tr>
+        <tbody id="mainbody">
+        <tr th:each="person : ${persons}">
+            <td class="id" th:text="${person.id}"></td>
+            <td th:text="${person.name}"></td>
+            <td th:text="${person.token}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<script type="text/javascript">
+
+    var arr = document.getElementsByClassName('id');
+    var lastId = arr[arr.length - 1].innerHTML - 1;
+
+    function addListenerOnLasElement(array) {
+        array[array.length - 1].addEventListener("mouseover", load);
+    }
+
+    addListenerOnLasElement(arr);
+
+    function load(evt){
+        var xhr = new XMLHttpRequest();
+        var url = "http://localhost:8080/" + lastId;
+        xhr.open("GET", url);
+        xhr.setRequestHeader("Content-type", "application/json");
+
+        xhr.onload = function (ev){
+            var jsonResponse = JSON.parse(xhr.responseText);
+            if(jsonResponse != null && jsonResponse.length > 0) {
+
+                for (var i = 0; i < jsonResponse.length; i++) {
+                    var newTr = document.createElement('TR');
+                    newTr.innerHTML = "<td class='id'>" + jsonResponse[i].id + "</td>" +
+                        "<td>" + jsonResponse[i].name + "</td>" +
+                        "<td>" + jsonResponse[i].token + "</td>";
+                    document.getElementById('mainbody').appendChild(newTr);
+                }
+                arr = document.getElementsByClassName('id');
+                lastId = arr[arr.length - 1].innerHTML - 1;
+                console.log(lastId);
+                addListenerOnLasElement(arr);
+            }
+        };
+
+        xhr.send();
+        arr[arr.length - 1].removeEventListener("mouseover", load);
+    };
+
+
+</script>
+
+</body>
+</html>

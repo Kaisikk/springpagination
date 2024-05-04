@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.w3.org/1999/xhtml">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+<body>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>NAME</th>
+        <th>TOKEN</th>
+    </tr>
+    <tbody id="mainbody">
+    <tr th:each="person : ${personsPage.content}">
+        <td class="id" th:text="${person.id}"></td>
+        <td th:text="${person.name}"></td>
+        <td th:text="${person.token}"></td>
+    </tr>
+    </tbody>
+</table>
+
+
+<ul class="pagination" th:if="${personsPage.totalPages > 0}">
+
+    <li th:each="pageNumber : ${numbers}"
+        th:class="${pageNumber == personsPage.number} ? active">
+
+        <a th:href="@{'/pagination?page=' + ${pageNumber}}"
+        th:text="${pageNumber + 1}"></a>
+
+    </li>
+
+</ul>
+
+</div>
+
+</body>
+</html>

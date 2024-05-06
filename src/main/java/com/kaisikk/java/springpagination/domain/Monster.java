@@ -5,12 +5,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
-import lombok.experimental.Accessors;
 
 @Entity
 @Data
-@Accessors(chain = true)
-public class Person {
+public class Monster {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,8 +16,8 @@ public class Person {
 
     private String name;
 
-    private Long token;
+    private Integer age;
 
-
+    private Integer power;
 
 }
